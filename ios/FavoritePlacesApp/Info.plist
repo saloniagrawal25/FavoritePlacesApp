@@ -40,8 +40,12 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
-	<key>NSCameraUsageDescription</key>
-	<key>NSPhotoLibraryUsageDescription</key>
+  <key>NSPhotoLibraryUsageDescription</key>
+    <string>App would like access to your photo gallery</string>
+    <key>NSCameraUsageDescription</key>
+    <string>App would like to use your camera</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>App would like to save photos to your photo gallery</string>
 	<array>
 		<string>armv7</string>
 	</array>
