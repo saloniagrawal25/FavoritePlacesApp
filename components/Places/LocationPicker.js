@@ -1,11 +1,41 @@
-//import Geolocation from 'react-native-geolocation-service';
-import {View, StyleSheet} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
+import {View, StyleSheet, Platform, PermissionsAndroid} from 'react-native';
 import {Colors} from '../../constants/colors';
 import OutlinedButton from '../UI/OutlinedButton';
 
 const LocationPicker = () => {
-  function getLocationHandler() {
-    // Geolocation.getCurrentPosition(info => console.log(info));
+  async function getPermission() {
+    let granted = false;
+    if (Platform.OS === 'ios') {
+      const auth = await Geolocation.requestAuthorization('whenInUse');
+      if (auth === 'granted') {
+        granted = true;
+      }
+    }
+    if (Platform.OS === 'android') {
+      const auth = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      if (auth === PermissionsAndroid.RESULTS.GRANTED) {
+        granted = true;
+      }
+    }
+    return granted;
+  }
+
+  async function getLocationHandler() {
+    const permission = await getPermission();
+    if (permission) {
+      Geolocation.getCurrentPosition(
+        position => {
+          console.log(position);
+        },
+        error => {
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    }
   }
 
   function pickOnMapHandler() {}
